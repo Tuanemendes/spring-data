@@ -1,6 +1,6 @@
 package br.com.alura.spring.data.orm;
 
-import java.util.Date;
+import java.time.LocalDate;
 import java.util.List;
 
 import javax.persistence.Entity;
@@ -18,7 +18,7 @@ import org.hibernate.annotations.Fetch;
 import org.hibernate.annotations.FetchMode;
 
 @Entity
-@Table(name="funcionario")
+@Table(name ="funcionarios")
 public class Funcionario {
 	
 	@Id
@@ -27,19 +27,31 @@ public class Funcionario {
 	private String nome;
 	private String cpf;
 	private Double salario;
-	private Date dataContratacao;
-	
+	private LocalDate dataContratacao;
 	@ManyToOne
-	@JoinColumn(name="cargo_id",nullable = false)
+	@JoinColumn(name = "cargo_id", nullable = false)
 	private Cargo cargo;
-	
 	@Fetch(FetchMode.SELECT)
 	@ManyToMany(fetch = FetchType.EAGER)
-	@JoinTable(name="funcionario_unidades", joinColumns = {
-			@JoinColumn(name="fk_funcionario")},
-		inverseJoinColumns = {@JoinColumn(name="fk_unidade")})
-	private List<UnidadeDeTrabalho> unidadeDeTrabalho;
+	@JoinTable(name = "funcionarios_unidades", joinColumns = {
+			@JoinColumn(name = "fk_funcionarios")},
+			inverseJoinColumns = {@JoinColumn(name = "fk_unidade")})
+	private List<UnidadeDeTrabalho> unidadeDeTrabalhos;
 	
+	
+	
+	public Cargo getCargo() {
+		return cargo;
+	}
+	public void setCargo(Cargo cargo) {
+		this.cargo = cargo;
+	}
+	public List<UnidadeDeTrabalho> getUnidadeDeTrabalhos() {
+		return unidadeDeTrabalhos;
+	}
+	public void setUnidadeDeTrabalhos(List<UnidadeDeTrabalho> unidadeDeTrabalhos) {
+		this.unidadeDeTrabalhos = unidadeDeTrabalhos;
+	}
 	public Integer getId() {
 		return id;
 	}
@@ -64,11 +76,17 @@ public class Funcionario {
 	public void setSalario(Double salario) {
 		this.salario = salario;
 	}
-	public Date getDataContratacao() {
+	public LocalDate getDataContratacao() {
 		return dataContratacao;
 	}
-	public void setDataContratacao(Date dataContratacao) {
+	public void setDataContratacao(LocalDate dataContratacao) {
 		this.dataContratacao = dataContratacao;
 	}
+	@Override
+	public String toString() {
+		return "Funcionario [id=" + id + ", nome=" + nome + ", cpf=" + cpf + ", salario=" + salario
+				+ ", dataContratacao=" + dataContratacao + "]";
+	}
 	
+
 }

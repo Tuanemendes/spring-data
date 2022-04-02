@@ -9,22 +9,24 @@ import br.com.alura.spring.data.repository.CargoRepository;
 
 @Service
 public class CrudCargoService {
-	
+
 	private final CargoRepository cargoRepository;
+	
 	private Boolean system = true;
 	
 	public CrudCargoService(CargoRepository cargoRepository) {
-		this.cargoRepository =cargoRepository;
+		this.cargoRepository= cargoRepository;
 	}
 	
-	public void  inicial(Scanner scanner) {
+	public void inicial(Scanner scanner) {
+		
 		while(system) {
-			System.out.println("Qual ação de cargo deseja executar ?");
-			System.out.println("0-Sair");
+			System.out.println("Escolha a opção para cargo: ");
+			System.out.println("0-Sair ");
 			System.out.println("1-Salvar");
 			System.out.println("2-Atualizar");
-			System.out.println("3-Buscar todos");
-			System.out.println("4-Excluir");
+			System.out.println("3-Buscar Todos");
+			System.out.println("4-Deletar");
 			
 			int action = scanner.nextInt();
 			
@@ -36,56 +38,54 @@ public class CrudCargoService {
 				atualizar(scanner);
 				break;
 			case 3:
-				buscar();
+				buscarTodos();
 				break;
 			case 4:
-				deletar(scanner);
+				deletarId(scanner);
 				break;
+				
 			default:
 				system = false;
 				break;
-			}	
-		}	
-	}
-	public void salvar(Scanner scanner) {
+			}
+		}
 		
-		System.out.println("Descrição do cargo");
+		
+	}
+	
+	private void salvar(Scanner scanner){
+		System.out.println("Descrição do cargo:");
 		String descricao = scanner.next();
+		
 		Cargo cargo = new Cargo();
 		cargo.setDescricao(descricao);
 		cargoRepository.save(cargo);
 		System.out.println("Salvo!");
 	}
-
-	public void atualizar(Scanner scanner) {
-		
-		System.out.println("qual o ID?");
+	
+	private void atualizar(Scanner scanner){
+		System.out.println("Infome o id: ");
 		int id = scanner.nextInt();
-		System.out.println("Qual a nova descrição?");
+		System.out.println("Descricao do cargo");
 		String descricao = scanner.next();
-		
-		Cargo cargo = new Cargo();
+		Cargo  cargo = new Cargo();
 		cargo.setId(id);
 		cargo.setDescricao(descricao);
-		
 		cargoRepository.save(cargo);
-		
-		System.out.println("Cargo Atulaizado com Sucesso!");
-	}
-	
-	private void buscar() {
-		
-		Iterable<Cargo> cargos = cargoRepository.findAll();
-		cargos.forEach(cargo-> System.out.println(cargo));
+		System.out.println("Atualizado");
 		
 	}
+	private void buscarTodos() {
+		Iterable<Cargo> cargos	= cargoRepository.findAll();
+		cargos.forEach(cargo -> System.out.println(cargo));
+	}
 	
-	private void deletar(Scanner scanner) {
-		System.out.println("Id");
+	
+	private void deletarId(Scanner scanner) {
+		System.out.println("Informe qual vai ser deletado:");
 		int id = scanner.nextInt();
 		cargoRepository.deleteById(id);
-		System.out.println("Excluido com sucesso !");
-		
+		System.out.println("Deletado!");
 	}
-
+	
 }

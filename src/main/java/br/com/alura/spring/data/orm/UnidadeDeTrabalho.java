@@ -10,9 +10,8 @@ import javax.persistence.Id;
 import javax.persistence.ManyToMany;
 import javax.persistence.Table;
 
-
 @Entity
-@Table(name=" unidades_trabalho")
+@Table(name="unidade_trabalho")
 public class UnidadeDeTrabalho {
 	
 	@Id
@@ -20,10 +19,17 @@ public class UnidadeDeTrabalho {
 	private Integer id;
 	private String descricao;
 	private String endereco;
+	@ManyToMany(mappedBy = "unidadeDeTrabalhos",fetch = FetchType.EAGER)
+	private List<Funcionario>funcionarios;
 	
-	@ManyToMany(mappedBy="unidadeDeTrabalho", fetch = FetchType.EAGER)
-	private List<Funcionario>funcionario;
 	
+	
+	public List<Funcionario> getFuncionarios() {
+		return funcionarios;
+	}
+	public void setFuncionarios(List<Funcionario> funcionarios) {
+		this.funcionarios = funcionarios;
+	}
 	public Integer getId() {
 		return id;
 	}
@@ -42,5 +48,10 @@ public class UnidadeDeTrabalho {
 	public void setEndereco(String endereco) {
 		this.endereco = endereco;
 	}
+	@Override
+	public String toString() {
+		return "UnidadeDeTrabalho [id=" + id + ", descricao=" + descricao + ", endereco=" + endereco + "]";
+	}
+	
 	
 }
