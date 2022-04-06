@@ -10,6 +10,7 @@ import org.springframework.data.jpa.repository.config.EnableJpaRepositories;
 import br.com.alura.spring.data.service.CrudCargoService;
 import br.com.alura.spring.data.service.CrudFuncionarioService;
 import br.com.alura.spring.data.service.CrudUnidadeDeTrabalhoService;
+import br.com.alura.spring.data.service.RelatoriosService;
 
 @EnableJpaRepositories
 @SpringBootApplication
@@ -19,15 +20,16 @@ public class SpringDataApplication implements CommandLineRunner{
 	private final CrudCargoService cargoService;
 	private final CrudFuncionarioService funcionarioService;
 	private final CrudUnidadeDeTrabalhoService unidadeDeTrabalhoService;
+	private final RelatoriosService relatoriosService;
 	
 	private Boolean system = true;
 	
 	//injeção de dependecia
-	public SpringDataApplication(CrudCargoService cargoService,CrudFuncionarioService funcionarioService, CrudUnidadeDeTrabalhoService unidadeDeTrabalhoService) {
+	public SpringDataApplication(CrudCargoService cargoService,CrudFuncionarioService funcionarioService, CrudUnidadeDeTrabalhoService unidadeDeTrabalhoService, RelatoriosService relatoriosService) {
 		this.cargoService = cargoService;
 		this.funcionarioService = funcionarioService;
 		this.unidadeDeTrabalhoService = unidadeDeTrabalhoService;
-		
+		this.relatoriosService = relatoriosService;
 	}
 
 	public static void main(String[] args) {
@@ -43,6 +45,7 @@ public class SpringDataApplication implements CommandLineRunner{
 			System.out.println("1-Cargo");
 			System.out.println("2-Funcionario");
 			System.out.println("3-Unidade de Trabalho");
+			System.out.println("4-Relatorio Funcionario");
 		
 			
 			Integer  action = scanner.nextInt();
@@ -57,6 +60,8 @@ public class SpringDataApplication implements CommandLineRunner{
 			case 3:
 				unidadeDeTrabalhoService.inicial(scanner);
 				break;
+			case 4:
+				relatoriosService.inicial(scanner);
 			default:
 				System.out.println("Fim!");
 				system = false;
