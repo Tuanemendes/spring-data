@@ -7,6 +7,10 @@ import java.util.List;
 import java.util.Optional;
 import java.util.Scanner;
 
+import org.springframework.data.domain.Page;
+import org.springframework.data.domain.PageRequest;
+import org.springframework.data.domain.Pageable;
+import org.springframework.data.domain.Sort;
 import org.springframework.stereotype.Service;
 
 import br.com.alura.spring.data.orm.Cargo;
@@ -24,6 +28,8 @@ public class CrudFuncionarioService {
 	private final UnidadeDeTrabalhoRepository unidadeDeTrabalhoRepository;
 	
 	private Boolean system = true;
+	
+	//formatação de data 
 	private final DateTimeFormatter formatter = DateTimeFormatter.ofPattern("dd/MM/yyyy");
 	
 	public CrudFuncionarioService(FuncionarioRepository funcionarioRepository, CargoRepository cargoRepository,UnidadeDeTrabalhoRepository unidadeDeTrabalhoRepository ) {
@@ -52,7 +58,7 @@ public class CrudFuncionarioService {
 				atualizar(scanner);
 				break;
 			case 3:
-				buscarTodos();
+				buscarTodos(scanner);
 				break;
 			case 4:
 				deletar(scanner);
@@ -145,8 +151,19 @@ public class CrudFuncionarioService {
 		
 		System.out.println("Funcionario atualizado com sucesso!");
 	}
-	public void buscarTodos() {
-		Iterable<Funcionario> funcionarios = funcionarioRepository.findAll();
+	public void buscarTodos(Scanner scanner) {
+		System.out.println("qual pagina deseja visualizar?");
+		Integer page = scanner.nextInt();
+		
+		//Pageable pageable = PageRequest.of(page, 3, Sort.unsorted()); sem ordenação 
+		// page é a pagina  3 é o numero de paginas 
+		Pageable pageable = PageRequest.of(page, 3, Sort.by(Sort.Direction.DESC,"salario")); // com ordenação descrescente salario sendo o nome da coluna no banco 
+		Page<Funcionario> funcionarios = funcionarioRepository.findAll(pageable);
+		
+		System.out.println(funcionarios);
+		System.out.println("Pagina Atual " + funcionarios.getNumber());
+		System.out.println("Total de elementos" + funcionarios.getTotalElements());
+		
 		funcionarios.forEach(funcionario -> System.out.println(funcionario));
 	}
 	public void deletar(Scanner scanner ){

@@ -15,11 +15,12 @@ public class RelatoriosService {
 	
 	private Boolean system = true;
 	
+	//formatação de data 
 	private final DateTimeFormatter formatter = DateTimeFormatter.ofPattern("dd/MM/yyyy");
 	private final FuncionarioRepository funcionarioRepository;
 	
 	
-	
+
 	public RelatoriosService(FuncionarioRepository funcionarioRepository) {
 		this.funcionarioRepository = funcionarioRepository;
 	}
