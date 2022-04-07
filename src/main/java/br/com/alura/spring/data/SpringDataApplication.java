@@ -10,6 +10,7 @@ import org.springframework.data.jpa.repository.config.EnableJpaRepositories;
 import br.com.alura.spring.data.service.CrudCargoService;
 import br.com.alura.spring.data.service.CrudFuncionarioService;
 import br.com.alura.spring.data.service.CrudUnidadeDeTrabalhoService;
+import br.com.alura.spring.data.service.RelatorioFuncionarioDinamico;
 import br.com.alura.spring.data.service.RelatoriosService;
 
 @EnableJpaRepositories
@@ -21,15 +22,16 @@ public class SpringDataApplication implements CommandLineRunner{
 	private final CrudFuncionarioService funcionarioService;
 	private final CrudUnidadeDeTrabalhoService unidadeDeTrabalhoService;
 	private final RelatoriosService relatoriosService;
-	
+	private final RelatorioFuncionarioDinamico relatorioFuncionarioDinamico; 
 	private Boolean system = true;
 	
 	//injeção de dependencia
-	public SpringDataApplication(CrudCargoService cargoService,CrudFuncionarioService funcionarioService, CrudUnidadeDeTrabalhoService unidadeDeTrabalhoService, RelatoriosService relatoriosService) {
+	public SpringDataApplication(CrudCargoService cargoService,CrudFuncionarioService funcionarioService, CrudUnidadeDeTrabalhoService unidadeDeTrabalhoService, RelatoriosService relatoriosService,RelatorioFuncionarioDinamico relatorioFuncionarioDinamico) {
 		this.cargoService = cargoService;
 		this.funcionarioService = funcionarioService;
 		this.unidadeDeTrabalhoService = unidadeDeTrabalhoService;
 		this.relatoriosService = relatoriosService;
+		this.relatorioFuncionarioDinamico = relatorioFuncionarioDinamico;
 	}
 
 	public static void main(String[] args) {
@@ -46,7 +48,7 @@ public class SpringDataApplication implements CommandLineRunner{
 			System.out.println("2-Funcionario");
 			System.out.println("3-Unidade de Trabalho");
 			System.out.println("4-Relatorio Funcionario");
-		
+			System.out.println("5-Relatorio Dinamico");
 			
 			Integer  action = scanner.nextInt();
 			
@@ -62,6 +64,8 @@ public class SpringDataApplication implements CommandLineRunner{
 				break;
 			case 4:
 				relatoriosService.inicial(scanner);
+			case 5:
+				relatorioFuncionarioDinamico.inicial(scanner);
 			default:
 				System.out.println("Fim!");
 				system = false;
