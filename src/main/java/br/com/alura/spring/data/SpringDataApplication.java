@@ -24,7 +24,7 @@ public class SpringDataApplication implements CommandLineRunner{
 	
 	private Boolean system = true;
 	
-	//injeção de dependecia
+	//injeção de dependencia
 	public SpringDataApplication(CrudCargoService cargoService,CrudFuncionarioService funcionarioService, CrudUnidadeDeTrabalhoService unidadeDeTrabalhoService, RelatoriosService relatoriosService) {
 		this.cargoService = cargoService;
 		this.funcionarioService = funcionarioService;

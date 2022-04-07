@@ -17,7 +17,7 @@ public class CrudCargoService {
 	public CrudCargoService(CargoRepository cargoRepository) {
 		this.cargoRepository= cargoRepository;
 	}
-	
+	//inicializa o menu de opções 
 	public void inicial(Scanner scanner) {
 		
 		while(system) {
